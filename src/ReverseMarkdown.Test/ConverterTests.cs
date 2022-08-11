@@ -117,6 +117,69 @@ namespace ReverseMarkdown.Test
         }
 
         [Fact]
+        public Task When_Content_Contains_MDBold_ThenEscapeBoldInMarkdown()
+        {
+            var html = @"<p>This md *bold* should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDItalic_ThenEscapeItalicInMarkdown()
+        {
+            var html = @"<p>This md _italic_ should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDHeading1_ThenEscapeHeading1InMarkdown()
+        {
+            var html = @"<p># Heading1 should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDHeading1_1_ThenEscapeHeading1_1InMarkdown()
+        {
+            var html = @"<p>== Heading type = should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDHeading1_2_ThenEscapeHeading1_2InMarkdown()
+        {
+            var html = @"<p>= Heading type = should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDList1_ThenEscapeList1InMarkdown()
+        {
+            var html = @"<p>- List 1 should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDList2_ThenEscapeList2InMarkdown()
+        {
+            var html = @"<p>+ List 1 should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDList3_ThenEscapeList3InMarkdown()
+        {
+            var html = @"<p>* List 1 should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
+        public Task When_Content_Contains_MDListOrdered_ThenEscapeListOrderedInMarkdown()
+        {
+            var html = @"<p>1. List ordered should be escaped</p>";
+            return CheckConversion(html);
+        }
+
+        [Fact]
         public Task WhenThereIsHtmlWithHrefAndNameNotMatching_SmartHandling_ThenConvertToMarkdown()
         {
             return CheckConversion(

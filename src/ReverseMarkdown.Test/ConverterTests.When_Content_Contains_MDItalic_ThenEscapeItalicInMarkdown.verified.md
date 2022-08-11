@@ -1,0 +1,1 @@
+﻿This md \_italic\_ should be escaped

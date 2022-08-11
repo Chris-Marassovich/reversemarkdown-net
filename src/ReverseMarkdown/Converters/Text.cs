@@ -8,11 +8,18 @@ namespace ReverseMarkdown.Converters
     public class Text : ConverterBase
     {
         private readonly Dictionary<string, string> _escapedKeyChars = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _escapedKeyCharsRegEx = new Dictionary<string, string>();
 
         public Text(Converter converter) : base(converter)
         {
             _escapedKeyChars.Add("*", @"\*");
             _escapedKeyChars.Add("_", @"\_");
+
+            _escapedKeyCharsRegEx.Add(@"^(#{1,6})", @"\$1"); //Escape the MD headings
+            _escapedKeyCharsRegEx.Add(@"^(=+)", @"\$1"); //Escape the alt MD heading of =======
+            _escapedKeyCharsRegEx.Add(@"^- ", @"\- "); //Escape the MD List unordered
+            _escapedKeyCharsRegEx.Add(@"^\+ ", @"\+ "); //Escape the MD List unordered
+            _escapedKeyCharsRegEx.Add(@"^(\d+)\. ", @"$1\. "); //Escape the MD List ordered
 
             Converter.Register("#text", this);
         }
@@ -60,6 +67,11 @@ namespace ReverseMarkdown.Converters
             foreach(var item in _escapedKeyChars)
             {
                 content = content.Replace(item.Key, item.Value);
+            }
+
+            foreach (var item in _escapedKeyCharsRegEx)
+            {
+                content = Regex.Replace(content, item.Key, item.Value);
             }
 
             return content;
